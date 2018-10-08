@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import sys
+import datetime
+from os import path
+
+log_dir = '/Users/cai/Dropbox/Writing/'
+
+if __name__ == '__main__':
+
+    now = datetime.datetime.now()
+    date = now.strftime('%Y-%m-%d')
+    time = now.strftime('%H:%M')
+
+    # The content of the entry
+    input_stream: str
+
+    # Use stdin if it's full. This enables pipes etc.
+    # Cheers to https://stackoverflow.com/a/11111088/2883198 for how to accept pipes in python.
+    if not sys.stdin.isatty():
+        input_stream = sys.stdin
+
+    # Otherwise, interpret the first argument as a filename and read it.
+    else:
+        # Get multi-line input from prompt
+        # Thanks to https://stackoverflow.com/a/11664675/2883198
+        sentinel = ''  # Will terminate when this is seen (i.e. double-enter is pressed).
+        input_stream = '\n'.join(iter(input, sentinel))
+
+    # Entry starts with doc separator and time
+    entry: str = (f"===\n{time}:\n")
+    # Then add message and separate with new line
+    for line in input_stream:
+        entry += line
+    entry += '\n'
+
+    with open(path.join(log_dir, f"{date}.txt"), mode="a", encoding="utf-8") as log_file:
+        log_file.write(entry)
