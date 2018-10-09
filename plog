@@ -20,7 +20,7 @@ def main():
     if not sys.stdin.isatty():
         input_stream = sys.stdin
 
-    # Otherwise, interpret the first argument as a filename and read it.
+    # Otherwise, prompt for text
     else:
         print("Enter text of entry. Linebreaks acceptable. Double linebreak to commit.")
         # Get multi-line input from prompt
