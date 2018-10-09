@@ -22,7 +22,7 @@ def main():
 
     # Otherwise, interpret the first argument as a filename and read it.
     else:
-        print("")
+        print("Enter text of entry. Linebreaks acceptable. Double linebreak to commit.")
         # Get multi-line input from prompt
         # Thanks to https://stackoverflow.com/a/11664675/2883198
         sentinel = ''  # Will terminate when this is seen (i.e. double-enter is pressed).
