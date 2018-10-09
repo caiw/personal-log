@@ -1,4 +1,13 @@
+`plog`: Personal log
+====================
+
 Add text to a personal log.
+
+When run, the input text will be added to a file named `YYYY-MM-DD.txt` with a `hh:mm` timestamp.
+
+
+Ways to invoke
+--------------
 
 Add the text directly
 
@@ -18,6 +27,16 @@ Or with a pipe:
 pbpaste | python /path/from/root/to/plog
 ```
 
+
+Configuration
+-------------
+
+Target path set in the script itself.
+
+
+Installation
+------------
+
 Install by adding
 
 ```sh
@@ -33,4 +52,3 @@ plog
 ```sh
 echo "test" | plog
 ```
-
