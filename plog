@@ -31,9 +31,8 @@ def main():
     # Build entry text
 
     # Entry starts with doc separator and time
-    entry: str = (f"==="
-                  f"{time}:"
-                  f"")
+    entry: str = (f"===\n"
+                  f"{time}:\n")
     # Then add message and separate with new line
     for line in input_stream:
         entry += line
