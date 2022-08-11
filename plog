@@ -2,17 +2,23 @@
 
 import sys
 import datetime
-from os import path
+from pathlib import Path
 
-log_dir = '/Users/cai/Dropbox/Writing/'
+log_dir = Path('/Users/cai/Nextcloud/External brain/Daily notes/')
 
 
 def main():
 
+    if not log_dir.exists():
+        raise FileNotFoundError(log_dir)
+
     # Details for timestamp
     now = datetime.datetime.now()
     date = now.strftime('%Y-%m-%d')
+    year = now.strftime('%Y')
     time = now.strftime('%H:%M')
+
+    note_path = Path(log_dir, year, f"{date}.md")
 
     # Use stdin if it's full. This enables pipes etc.
     # Cheers to https://stackoverflow.com/a/11111088/2883198 for how to accept pipes in python.
@@ -27,22 +33,30 @@ def main():
         # Thanks to https://stackoverflow.com/a/11664675/2883198
         sentinel = ''  # Will terminate when this is seen (i.e. double-enter is pressed).
         input_stream = '\n'.join(iter(input, sentinel))
-
+        
     # Build entry text
-
-    # Entry starts with doc separator and time
-    entry: str = (f"===\n"
-                  f"{time}:\n")
+    entry: str = ""
+    
+    if note_path.exists():
+        # Need to prepend separator
+        entry += "===\n"
+    
+    # Timestamp
+    entry += f"{time}:\n"
+    
     # Then add message and separate with new line
     for line in input_stream:
         entry += line
     entry += '\n'
 
     # Write entry to file
-    with open(path.join(log_dir, f"{date}.txt"), mode="a", encoding="utf-8") as log_file:
-        log_file.write(entry)
+    try:
+        with note_path.open("a", encoding="utf-8") as log_file:
+            log_file.write(entry)
+    except Exception as e:
+        print(entry)
+        raise e
 
 
 if __name__ == '__main__':
-
     main()
